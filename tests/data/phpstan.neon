@@ -1,0 +1,11 @@
+parameters:
+  level: 9
+  paths:
+    - tests
+  scanDirectories:
+    - vendor/cakephp/cakephp
+services:
+  -
+    class: ARiddlestone\PHPStanCakePHP2\ControllerModelsExtension
+    tags:
+      - phpstan.broker.propertiesClassReflectionExtension

@@ -1,0 +1,45 @@
+{
+    "name": "ariddlestone/phpstan-cakephp2",
+    "description": "Stubs to help test CakePHP 2 projects with PHPStan",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Andrew Riddlestone",
+            "email": "andrew.riddlestone@gmail.com"
+        }
+    ],
+    "require": {
+        "php": "^7.2|^8.0",
+        "phpstan/phpstan": "^1.9"
+    },
+    "require-dev": {
+        "cakephp/cakephp": "^2.10.24",
+        "phpstan/phpstan-phpunit": "^1.3",
+        "phpunit/phpunit": "^9.6"
+
+    },
+    "autoload": {
+        "psr-4": {
+            "ARiddlestone\\PHPStanCakePHP2\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "ARiddlestone\\PHPStanCakePHP2\\Test\\": "tests/"
+        },
+        "classmap": [
+            "tests/classes",
+            "vendor/cakephp/cakephp/lib/Cake/Cache",
+            "vendor/cakephp/cakephp/lib/Cake/Config",
+            "vendor/cakephp/cakephp/lib/Cake/Core",
+            "vendor/cakephp/cakephp/lib/Cake/Controller",
+            "vendor/cakephp/cakephp/lib/Cake/Event",
+            "vendor/cakephp/cakephp/lib/Cake/Model",
+            "vendor/cakephp/cakephp/lib/Cake/View"
+        ]
+    },
+    "scripts": {
+        "extract-phpstan": "phar extract -f vendor/phpstan/phpstan/phpstan.phar"
+    }
+}
