@@ -40,6 +40,10 @@
         ]
     },
     "scripts": {
-        "extract-phpstan": "phar extract -f vendor/phpstan/phpstan/phpstan.phar"
+        "extract-phpstan": "phar extract -f vendor/phpstan/phpstan/phpstan.phar phpstan",
+        "test": [
+            "phpunit",
+            "phpstan"
+        ]
     }
 }
