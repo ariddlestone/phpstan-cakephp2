@@ -12,6 +12,7 @@ class ControllerModelsExtensionTest extends TypeInferenceTestCase
     public function dataFileAsserts(): iterable
     {
         yield from $this->gatherAssertTypes(__DIR__ . '/data/existing_controller_model.php');
+        yield from $this->gatherAssertTypes(__DIR__ . '/data/invalid_controller_model.php');
     }
 
     /**
