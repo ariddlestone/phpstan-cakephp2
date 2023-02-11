@@ -12,7 +12,11 @@ permissions:
 jobs:
   build:
 
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        php-versions: [ "7.4" ]
 
     steps:
       - uses: actions/checkout@v3
