@@ -45,5 +45,12 @@
             "phpunit",
             "phpstan"
         ]
+    },
+    "extra": {
+        "phpstan": {
+            "includes": [
+                "extension.neon"
+            ]
+        }
     }
 }
