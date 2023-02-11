@@ -5,7 +5,9 @@ parameters:
   scanDirectories:
     - vendor/cakephp/cakephp
 services:
-  -
-    class: ARiddlestone\PHPStanCakePHP2\ControllerModelsExtension
+  - class: ARiddlestone\PHPStanCakePHP2\ControllerComponentsExtension
+    tags:
+      - phpstan.broker.propertiesClassReflectionExtension
+  - class: ARiddlestone\PHPStanCakePHP2\ControllerModelsExtension
     tags:
       - phpstan.broker.propertiesClassReflectionExtension

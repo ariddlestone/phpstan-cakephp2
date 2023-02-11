@@ -8,7 +8,7 @@ use PHPStan\TrinaryLogic;
 use PHPStan\Type\ObjectType;
 use PHPStan\Type\Type;
 
-class ControllerModelPropertyReflection implements PropertyReflection
+class ControllerPropertyReflection implements PropertyReflection
 {
     /**
      * @var string

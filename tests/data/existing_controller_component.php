@@ -5,6 +5,6 @@ declare(strict_types = 1);
 use function PHPStan\Testing\assertType;
 
 /** @var BasicController $controller */
-$model = $controller->stdClass;
+$component = $controller->BasicComponent;
 
-assertType('*ERROR*', $model);
+assertType('BasicComponent', $component);
