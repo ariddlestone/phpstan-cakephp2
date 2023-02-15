@@ -1,9 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace ARiddlestone\PHPStanCakePHP2;
 
 use Exception;
-use PHPStan\Analyser\ScopeFactory;
 use PHPStan\BetterReflection\Reflection\Adapter\ReflectionMethod;
 use PHPStan\Reflection\ClassReflection;
 use PHPStan\Reflection\ExtendedMethodReflection;
@@ -22,17 +23,17 @@ class ModelBehaviorsExtension implements MethodsClassReflectionExtension
     private $reflectionProvider;
 
     /**
-     * @var string[]
+     * @var array<string>
      */
     private $behaviorPaths;
 
     /**
-     * @var MethodReflection[]|null
+     * @var array<MethodReflection>|null
      */
     private $behaviorMethods = null;
 
     /**
-     * @param string[] $behaviorPaths
+     * @param array<string> $behaviorPaths
      */
     public function __construct(ReflectionProvider $reflectionProvider, array $behaviorPaths)
     {
@@ -46,7 +47,7 @@ class ModelBehaviorsExtension implements MethodsClassReflectionExtension
             && count(
                 array_filter(
                     $this->getBehaviorMethods(),
-                    function (MethodReflection $methodReflection) use ($methodName) {
+                    static function (MethodReflection $methodReflection) use ($methodName) {
                         return $methodReflection->getName() === $methodName;
                     }
                 )
@@ -57,7 +58,7 @@ class ModelBehaviorsExtension implements MethodsClassReflectionExtension
     {
         $methodReflections = array_filter(
             $this->getBehaviorMethods(),
-            function (MethodReflection $methodReflection) use ($methodName) {
+            static function (MethodReflection $methodReflection) use ($methodName) {
                 return $methodReflection->getName() === $methodName;
             }
         );
@@ -68,7 +69,7 @@ class ModelBehaviorsExtension implements MethodsClassReflectionExtension
     }
 
     /**
-     * @return MethodReflection[]
+     * @return array<MethodReflection>
      */
     private function getBehaviorMethods(): array
     {
@@ -77,13 +78,13 @@ class ModelBehaviorsExtension implements MethodsClassReflectionExtension
             foreach ($this->behaviorPaths as $path) {
                 $classPaths = array_merge($classPaths, glob($path) ?: []);
             }
-            $classNames = array_map(function ($classPath) {
+            $classNames = array_map(static function ($classPath) {
                 return basename($classPath, '.php');
             }, $classPaths);
             $classNames = array_filter($classNames, [$this->reflectionProvider, 'hasClass']);
             $classReflections = array_map([$this->reflectionProvider, 'getClass'], $classNames);
-            /** @var ClassReflection[] $classReflections */
-            $classReflections = array_filter($classReflections, function (ClassReflection $classReflection) {
+            /** @var array<ClassReflection> $classReflections */
+            $classReflections = array_filter($classReflections, static function (ClassReflection $classReflection) {
                 return $classReflection->is('ModelBehavior');
             });
             $this->behaviorMethods = [];
@@ -99,22 +100,22 @@ class ModelBehaviorsExtension implements MethodsClassReflectionExtension
      *
      * Also filters out private, protected, and static methods.
      *
-     * @return MethodReflection[]
+     * @return array<MethodReflection>
      */
     private function getModelBehaviorMethods(ClassReflection $classReflection): array
     {
-        $methodNames = array_map(function (ReflectionMethod $methodReflection) {
+        $methodNames = array_map(static function (ReflectionMethod $methodReflection) {
             return $methodReflection->getName();
         }, $classReflection->getNativeReflection()->getMethods());
-        /** @var ExtendedMethodReflection[] $methodReflections */
+        /** @var array<ExtendedMethodReflection> $methodReflections */
         $methodReflections = array_filter(
             array_map([$classReflection, 'getNativeMethod'], $methodNames),
-            function (ExtendedMethodReflection $methodReflection) {
+            static function (ExtendedMethodReflection $methodReflection) {
                 return $methodReflection->isPublic()
-                    && !$methodReflection->isStatic()
+                    && ! $methodReflection->isStatic()
                     && array_filter(
                         $methodReflection->getVariants(),
-                        function (ParametersAcceptor $parametersAcceptor) {
+                        static function (ParametersAcceptor $parametersAcceptor) {
                             $parameters = $parametersAcceptor->getParameters();
                             /** @var ParameterReflection|null $firstParameter */
                             $firstParameter = array_shift($parameters);
@@ -124,7 +125,7 @@ class ModelBehaviorsExtension implements MethodsClassReflectionExtension
                     );
             }
         );
-        return array_map(function (ExtendedMethodReflection $methodReflection) {
+        return array_map(static function (ExtendedMethodReflection $methodReflection) {
             return new ModelBehaviorMethodWrapper($methodReflection);
         }, $methodReflections);
     }

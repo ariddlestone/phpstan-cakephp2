@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace ARiddlestone\PHPStanCakePHP2;
 
 use PHPStan\Reflection\ClassMemberReflection;
@@ -58,11 +60,11 @@ class ModelBehaviorMethodWrapper implements MethodReflection
     }
 
     /**
-     * @return ParametersAcceptor[]
+     * @return array<ParametersAcceptor>
      */
     public function getVariants(): array
     {
-        return array_map(function (ParametersAcceptor $variant) {
+        return array_map(static function (ParametersAcceptor $variant) {
             $parameters = $variant->getParameters();
             array_shift($parameters);
             return new FunctionVariant(
