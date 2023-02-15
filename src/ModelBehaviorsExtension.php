@@ -44,14 +44,7 @@ class ModelBehaviorsExtension implements MethodsClassReflectionExtension
     public function hasMethod(ClassReflection $classReflection, string $methodName): bool
     {
         return $classReflection->is('Model')
-            && count(
-                array_filter(
-                    $this->getBehaviorMethods(),
-                    static function (MethodReflection $methodReflection) use ($methodName) {
-                        return $methodReflection->getName() === $methodName;
-                    }
-                )
-            ) > 0;
+            && in_array($methodName, array_map([$this, 'getMethodReflectionName'], $this->getBehaviorMethods()));
     }
 
     public function getMethod(ClassReflection $classReflection, string $methodName): MethodReflection
@@ -104,29 +97,48 @@ class ModelBehaviorsExtension implements MethodsClassReflectionExtension
      */
     private function getModelBehaviorMethods(ClassReflection $classReflection): array
     {
-        $methodNames = array_map(static function (ReflectionMethod $methodReflection) {
-            return $methodReflection->getName();
-        }, $classReflection->getNativeReflection()->getMethods());
+        $methodNames = array_map(
+            [$this, 'getMethodReflectionName'],
+            $classReflection->getNativeReflection()->getMethods()
+        );
         /** @var array<ExtendedMethodReflection> $methodReflections */
         $methodReflections = array_filter(
             array_map([$classReflection, 'getNativeMethod'], $methodNames),
-            static function (ExtendedMethodReflection $methodReflection) {
-                return $methodReflection->isPublic()
-                    && ! $methodReflection->isStatic()
-                    && array_filter(
-                        $methodReflection->getVariants(),
-                        static function (ParametersAcceptor $parametersAcceptor) {
-                            $parameters = $parametersAcceptor->getParameters();
-                            /** @var ParameterReflection|null $firstParameter */
-                            $firstParameter = array_shift($parameters);
-                            return $firstParameter
-                                && ! $firstParameter->getType()->isSuperTypeOf(new ObjectType('Model'))->no();
-                        }
-                    );
-            }
+            [$this, 'filterBehaviorMethods']
         );
-        return array_map(static function (ExtendedMethodReflection $methodReflection) {
-            return new ModelBehaviorMethodWrapper($methodReflection);
-        }, $methodReflections);
+        return array_map([$this, 'wrapBehaviorMethod'], $methodReflections);
+    }
+
+    private function filterBehaviorMethods(ExtendedMethodReflection $methodReflection): bool
+    {
+        return $methodReflection->isPublic()
+            && ! $methodReflection->isStatic()
+            && array_filter(
+                $methodReflection->getVariants(),
+                [$this, 'filterBehaviorMethodVariants']
+            );
+    }
+
+    private function filterBehaviorMethodVariants(ParametersAcceptor $parametersAcceptor): bool
+    {
+        $parameters = $parametersAcceptor->getParameters();
+        /** @var ParameterReflection|null $firstParameter */
+        $firstParameter = array_shift($parameters);
+        return $firstParameter
+            && ! $firstParameter->getType()->isSuperTypeOf(new ObjectType('Model'))->no();
+    }
+
+    private function wrapBehaviorMethod(MethodReflection $methodReflection): MethodReflection
+    {
+        return new ModelBehaviorMethodWrapper($methodReflection);
+    }
+
+    /**
+     * @param MethodReflection|ReflectionMethod $methodReflection
+     * @return string
+     */
+    private function getMethodReflectionName($methodReflection): string
+    {
+        return $methodReflection->getName();
     }
 }
