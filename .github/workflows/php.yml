@@ -28,5 +28,11 @@ jobs:
       - name: Install dependencies
         run: composer install --prefer-dist --no-progress
 
+      - name: Run code quality checks
+        run: composer run-script phpinsights-github
+
+      - name: Run static type analysis
+        run: composer run-script phpstan
+
       - name: Run test suite
-        run: composer run-script test
+        run: composer run-script phpunit

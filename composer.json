@@ -16,7 +16,8 @@
     "require-dev": {
         "cakephp/cakephp": "^2.10.24",
         "phpstan/phpstan-phpunit": "^1.3",
-        "phpunit/phpunit": "^9.6"
+        "phpunit/phpunit": "^9.6",
+        "nunomaduro/phpinsights": "^2.7"
 
     },
     "autoload": {
@@ -41,9 +42,14 @@
     },
     "scripts": {
         "extract-phpstan": "phar extract -f vendor/phpstan/phpstan/phpstan.phar phpstan",
+        "phpinsights": "phpinsights analyse --no-interaction --ansi --config-path=phpinsights.php --summary src",
+        "phpinsights-github": "phpinsights analyse --no-interaction --ansi --config-path=phpinsights.php --format=github-action src",
+        "phpstan": "phpstan",
+        "phpunit": "phpunit",
         "test": [
-            "phpunit",
-            "phpstan"
+            "@phpunit",
+            "@phpstan",
+            "@phpinsights"
         ]
     },
     "extra": {
@@ -51,6 +57,11 @@
             "includes": [
                 "extension.neon"
             ]
+        }
+    },
+    "config": {
+        "allow-plugins": {
+            "dealerdirect/phpcodesniffer-composer-installer": false
         }
     }
 }
