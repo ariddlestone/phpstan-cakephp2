@@ -4,23 +4,22 @@ namespace ARiddlestone\PHPStanCakePHP2\Test;
 
 use PHPStan\Testing\TypeInferenceTestCase;
 
-class ControllerExtensionsTest extends TypeInferenceTestCase
+class ModelExtensionsTest extends TypeInferenceTestCase
 {
     /**
      * @return mixed[]
      */
     public function dataFileAsserts(): iterable
     {
-        yield from $this->gatherAssertTypes(__DIR__ . '/data/existing_controller_model.php');
-        yield from $this->gatherAssertTypes(__DIR__ . '/data/existing_controller_component.php');
-        yield from $this->gatherAssertTypes(__DIR__ . '/data/invalid_controller_property.php');
+        yield from $this->gatherAssertTypes(__DIR__ . '/data/existing_model_behavior.php');
+        yield from $this->gatherAssertTypes(__DIR__ . '/data/invalid_model_property.php');
     }
 
     /**
      * @dataProvider dataFileAsserts
      * @param mixed $args
      */
-    public function testControllerExtensions(string $assertType, string $file, ...$args): void
+    public function testModelExtensions(string $assertType, string $file, ...$args): void
     {
         $this->assertFileAsserts($assertType, $file, ...$args);
     }
