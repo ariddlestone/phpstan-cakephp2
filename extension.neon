@@ -1,6 +1,12 @@
 parameters:
   scanDirectories:
     - vendor/cakephp/cakephp
+  ModelBehaviorsExtension:
+    behaviorPaths:
+      - vendor/cakephp/cakephp/lib/Cake/Model/Behavior/*.php
+      - lib/Cake/Model/Behavior/*.php
+      - app/Plugin/*/Model/Behavior/*.php
+      - app/Model/Behavior/*.php
 services:
   - class: ARiddlestone\PHPStanCakePHP2\ControllerComponentsExtension
     tags:
@@ -9,5 +15,11 @@ services:
     tags:
       - phpstan.broker.propertiesClassReflectionExtension
   - class: ARiddlestone\PHPStanCakePHP2\ModelBehaviorsExtension
+    arguments:
+      behaviorPaths: %ModelBehaviorsExtension.behaviorPaths%
     tags:
       - phpstan.broker.methodsClassReflectionExtension
+parametersSchema:
+  ModelBehaviorsExtension: structure([
+    behaviorPaths: listOf(string())
+  ])

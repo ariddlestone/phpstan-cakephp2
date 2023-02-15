@@ -2,5 +2,8 @@ parameters:
   level: 9
   paths:
     - tests
+  ModelBehaviorsExtension:
+    behaviorPaths:
+      - tests/classes/Model/Behavior/*.php
 includes:
   - ../../extension.neon

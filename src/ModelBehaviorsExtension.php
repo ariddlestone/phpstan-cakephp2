@@ -16,26 +16,28 @@ use PHPStan\Type\ObjectType;
 
 class ModelBehaviorsExtension implements MethodsClassReflectionExtension
 {
-    private const DEFAULT_BEHAVIOR_PATHS = [
-        'vendor/cakephp/cakephp/lib/Cake/Model/Behavior/*.php',
-        'lib/Cake/Model/Behavior/*.php',
-        'app/Plugin/*/Model/Behavior/*.php',
-        'app/Model/Behavior/*.php',
-    ];
-
     /**
      * @var ReflectionProvider
      */
     private $reflectionProvider;
 
     /**
+     * @var string[]
+     */
+    private $behaviorPaths;
+
+    /**
      * @var MethodReflection[]|null
      */
     private $behaviorMethods = null;
 
-    public function __construct(ReflectionProvider $reflectionProvider)
+    /**
+     * @param string[] $behaviorPaths
+     */
+    public function __construct(ReflectionProvider $reflectionProvider, array $behaviorPaths)
     {
         $this->reflectionProvider = $reflectionProvider;
+        $this->behaviorPaths = $behaviorPaths;
     }
 
     public function hasMethod(ClassReflection $classReflection, string $methodName): bool
@@ -72,7 +74,7 @@ class ModelBehaviorsExtension implements MethodsClassReflectionExtension
     {
         if ($this->behaviorMethods === null) {
             $classPaths = [];
-            foreach (self::DEFAULT_BEHAVIOR_PATHS as $path) {
+            foreach ($this->behaviorPaths as $path) {
                 $classPaths = array_merge($classPaths, glob($path) ?: []);
             }
             $classNames = array_map(function ($classPath) {

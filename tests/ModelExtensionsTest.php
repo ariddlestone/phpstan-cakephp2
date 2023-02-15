@@ -11,7 +11,8 @@ class ModelExtensionsTest extends TypeInferenceTestCase
      */
     public function dataFileAsserts(): iterable
     {
-        yield from $this->gatherAssertTypes(__DIR__ . '/data/existing_model_behavior.php');
+        yield from $this->gatherAssertTypes(__DIR__ . '/data/core_model_behavior.php');
+        yield from $this->gatherAssertTypes(__DIR__ . '/data/custom_model_behavior.php');
         yield from $this->gatherAssertTypes(__DIR__ . '/data/invalid_model_property.php');
     }
 
