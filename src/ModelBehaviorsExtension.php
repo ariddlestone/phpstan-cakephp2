@@ -86,17 +86,12 @@ final class ModelBehaviorsExtension implements MethodsClassReflectionExtension
     private function getBehaviorMethods(): array
     {
         if ($this->behaviorMethods === null) {
-            $classNames = $this->getClassNamesFromPaths($this->behaviorPaths);
-            $classReflections = array_map(
-                [$this->reflectionProvider, 'getClass'],
-                $classNames
+            $classReflectionFinder = new ClassReflectionFinder(
+                $this->reflectionProvider
             );
-            /** @var array<ClassReflection> $classReflections */
-            $classReflections = array_filter(
-                $classReflections,
-                static function (ClassReflection $classReflection) {
-                    return $classReflection->is('ModelBehavior');
-                }
+            $classReflections = $classReflectionFinder->getClassReflections(
+                $this->behaviorPaths,
+                'ModelBehavior'
             );
             $this->behaviorMethods = [];
             foreach ($classReflections as $classReflection) {
@@ -107,32 +102,6 @@ final class ModelBehaviorsExtension implements MethodsClassReflectionExtension
             }
         }
         return $this->behaviorMethods;
-    }
-
-    /**
-     * @param array<string> $paths
-     *
-     * @return array<string>
-     *
-     * @throws Exception
-     */
-    private function getClassNamesFromPaths(array $paths): array
-    {
-        $classPaths = [];
-        foreach ($paths as $path) {
-            $filePaths = glob($path);
-            if (! is_array($filePaths)) {
-                throw new Exception(sprintf('glob(%s) caused an error', $path));
-            }
-            $classPaths = array_merge($classPaths, $filePaths);
-        }
-        $classNames = array_map(static function ($classPath) {
-            return basename($classPath, '.php');
-        }, $classPaths);
-        return array_filter(
-            $classNames,
-            [$this->reflectionProvider, 'hasClass']
-        );
     }
 
     /**
