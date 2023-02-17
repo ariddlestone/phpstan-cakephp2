@@ -15,7 +15,7 @@ use PHPStan\Reflection\ParametersAcceptor;
 use PHPStan\Reflection\ReflectionProvider;
 use PHPStan\Type\ObjectType;
 
-class ModelBehaviorsExtension implements MethodsClassReflectionExtension
+final class ModelBehaviorsExtension implements MethodsClassReflectionExtension
 {
     /**
      * @var ReflectionProvider
@@ -63,13 +63,19 @@ class ModelBehaviorsExtension implements MethodsClassReflectionExtension
 
     /**
      * @return array<MethodReflection>
+     *
+     * @throws Exception
      */
     private function getBehaviorMethods(): array
     {
         if ($this->behaviorMethods === null) {
             $classPaths = [];
             foreach ($this->behaviorPaths as $path) {
-                $classPaths = array_merge($classPaths, glob($path) ?: []);
+                $filePaths = glob($path);
+                if (! is_array($filePaths)) {
+                    throw new Exception(sprintf('glob(%s) caused an error', $path));
+                }
+                $classPaths = array_merge($classPaths, $filePaths);
             }
             $classNames = array_map(static function ($classPath) {
                 return basename($classPath, '.php');
@@ -135,7 +141,6 @@ class ModelBehaviorsExtension implements MethodsClassReflectionExtension
 
     /**
      * @param MethodReflection|ReflectionMethod $methodReflection
-     * @return string
      */
     private function getMethodReflectionName($methodReflection): string
     {

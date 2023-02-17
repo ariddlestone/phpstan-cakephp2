@@ -12,7 +12,7 @@ use PHPStan\Reflection\ParametersAcceptor;
 use PHPStan\TrinaryLogic;
 use PHPStan\Type\Type;
 
-class ModelBehaviorMethodWrapper implements MethodReflection
+final class ModelBehaviorMethodWrapper implements MethodReflection
 {
     /**
      * @var MethodReflection

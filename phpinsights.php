@@ -2,6 +2,9 @@
 
 declare(strict_types=1);
 
+use SlevomatCodingStandard\Sniffs\Functions\UnusedParameterSniff;
+use SlevomatCodingStandard\Sniffs\TypeHints\PropertyTypeHintSniff;
+
 return [
 
     /*
@@ -37,7 +40,7 @@ return [
     |
     */
 
-    'ide' => null,
+    'ide' => 'phpstorm',
 
     /*
     |--------------------------------------------------------------------------
@@ -51,7 +54,9 @@ return [
     */
 
     'exclude' => [
-        // path/to/file-or-directory
+        'phpstan',
+        'tests',
+        'vendor',
     ],
 
     'add' => [
@@ -61,7 +66,11 @@ return [
     ],
 
     'remove' => [
-        //  ExampleInsight::class,
+        // PHP 7.2 & 7.3 don't support native type hints for properties:
+        PropertyTypeHintSniff::class,
+
+        // Interfaces sometimes require unused parameters:
+        UnusedParameterSniff::class,
     ],
 
     'config' => [

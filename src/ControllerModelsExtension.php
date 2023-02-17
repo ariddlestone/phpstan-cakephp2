@@ -12,7 +12,7 @@ use PHPStan\Reflection\ReflectionProvider;
 /**
  * Supports discovering models in controllers.
  */
-class ControllerModelsExtension implements PropertiesClassReflectionExtension
+final class ControllerModelsExtension implements PropertiesClassReflectionExtension
 {
     /**
      * @var ReflectionProvider
