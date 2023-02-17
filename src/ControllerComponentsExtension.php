@@ -12,7 +12,8 @@ use PHPStan\Reflection\ReflectionProvider;
 /**
  * Supports discovering models in controllers.
  */
-final class ControllerComponentsExtension implements PropertiesClassReflectionExtension
+final class ControllerComponentsExtension implements
+    PropertiesClassReflectionExtension
 {
     /**
      * @var ReflectionProvider
@@ -24,15 +25,36 @@ final class ControllerComponentsExtension implements PropertiesClassReflectionEx
         $this->reflectionProvider = $reflectionProvider;
     }
 
-    public function hasProperty(ClassReflection $classReflection, string $propertyName): bool
-    {
-        return $classReflection->is('Controller')
-            && $this->reflectionProvider->hasClass($propertyName)
-            && $this->reflectionProvider->getClass($propertyName)->is('Component');
+    public function hasProperty(
+        ClassReflection $classReflection,
+        string $propertyName
+    ): bool {
+        if (! $classReflection->is('Controller')) {
+            return false;
+        }
+
+        if (! $this->reflectionProvider->hasClass($propertyName)) {
+            return false;
+        }
+
+        if (
+            ! $this->reflectionProvider
+                ->getClass($propertyName)
+                ->is('Component')
+        ) {
+            return false;
+        }
+
+        return true;
     }
 
-    public function getProperty(ClassReflection $classReflection, string $propertyName): PropertyReflection
-    {
-        return new ControllerPropertyReflection($propertyName, $classReflection);
+    public function getProperty(
+        ClassReflection $classReflection,
+        string $propertyName
+    ): PropertyReflection {
+        return new ControllerPropertyReflection(
+            $propertyName,
+            $classReflection
+        );
     }
 }

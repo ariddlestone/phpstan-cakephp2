@@ -35,20 +35,35 @@ final class ModelBehaviorsExtension implements MethodsClassReflectionExtension
     /**
      * @param array<string> $behaviorPaths
      */
-    public function __construct(ReflectionProvider $reflectionProvider, array $behaviorPaths)
-    {
+    public function __construct(
+        ReflectionProvider $reflectionProvider,
+        array $behaviorPaths
+    ) {
         $this->reflectionProvider = $reflectionProvider;
         $this->behaviorPaths = $behaviorPaths;
     }
 
-    public function hasMethod(ClassReflection $classReflection, string $methodName): bool
-    {
+    /**
+     * @throws Exception
+     */
+    public function hasMethod(
+        ClassReflection $classReflection,
+        string $methodName
+    ): bool {
         return $classReflection->is('Model')
-            && in_array($methodName, array_map([$this, 'getMethodReflectionName'], $this->getBehaviorMethods()));
+            && in_array(
+                $methodName,
+                array_map(
+                    [$this, 'getMethodReflectionName'],
+                    $this->getBehaviorMethods()
+                )
+            );
     }
 
-    public function getMethod(ClassReflection $classReflection, string $methodName): MethodReflection
-    {
+    public function getMethod(
+        ClassReflection $classReflection,
+        string $methodName
+    ): MethodReflection {
         $methodReflections = array_filter(
             $this->getBehaviorMethods(),
             static function (MethodReflection $methodReflection) use ($methodName) {
@@ -101,8 +116,9 @@ final class ModelBehaviorsExtension implements MethodsClassReflectionExtension
      *
      * @return array<MethodReflection>
      */
-    private function getModelBehaviorMethods(ClassReflection $classReflection): array
-    {
+    private function getModelBehaviorMethods(
+        ClassReflection $classReflection
+    ): array {
         $methodNames = array_map(
             [$this, 'getMethodReflectionName'],
             $classReflection->getNativeReflection()->getMethods()
@@ -115,8 +131,9 @@ final class ModelBehaviorsExtension implements MethodsClassReflectionExtension
         return array_map([$this, 'wrapBehaviorMethod'], $methodReflections);
     }
 
-    private function filterBehaviorMethods(ExtendedMethodReflection $methodReflection): bool
-    {
+    private function filterBehaviorMethods(
+        ExtendedMethodReflection $methodReflection
+    ): bool {
         return $methodReflection->isPublic()
             && ! $methodReflection->isStatic()
             && array_filter(
@@ -125,8 +142,9 @@ final class ModelBehaviorsExtension implements MethodsClassReflectionExtension
             );
     }
 
-    private function filterBehaviorMethodVariants(ParametersAcceptor $parametersAcceptor): bool
-    {
+    private function filterBehaviorMethodVariants(
+        ParametersAcceptor $parametersAcceptor
+    ): bool {
         $parameters = $parametersAcceptor->getParameters();
         /** @var ParameterReflection|null $firstParameter */
         $firstParameter = array_shift($parameters);
@@ -134,8 +152,9 @@ final class ModelBehaviorsExtension implements MethodsClassReflectionExtension
             && ! $firstParameter->getType()->isSuperTypeOf(new ObjectType('Model'))->no();
     }
 
-    private function wrapBehaviorMethod(MethodReflection $methodReflection): MethodReflection
-    {
+    private function wrapBehaviorMethod(
+        MethodReflection $methodReflection
+    ): MethodReflection {
         return new ModelBehaviorMethodWrapper($methodReflection);
     }
 
