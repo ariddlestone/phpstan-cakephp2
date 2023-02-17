@@ -66,7 +66,9 @@ final class ModelBehaviorsExtension implements MethodsClassReflectionExtension
     ): MethodReflection {
         $methodReflections = array_filter(
             $this->getBehaviorMethods(),
-            static function (MethodReflection $methodReflection) use ($methodName) {
+            static function (
+                MethodReflection $methodReflection
+            ) use ($methodName) {
                 return $methodReflection->getName() === $methodName;
             }
         );
@@ -84,33 +86,58 @@ final class ModelBehaviorsExtension implements MethodsClassReflectionExtension
     private function getBehaviorMethods(): array
     {
         if ($this->behaviorMethods === null) {
-            $classPaths = [];
-            foreach ($this->behaviorPaths as $path) {
-                $filePaths = glob($path);
-                if (! is_array($filePaths)) {
-                    throw new Exception(sprintf('glob(%s) caused an error', $path));
-                }
-                $classPaths = array_merge($classPaths, $filePaths);
-            }
-            $classNames = array_map(static function ($classPath) {
-                return basename($classPath, '.php');
-            }, $classPaths);
-            $classNames = array_filter($classNames, [$this->reflectionProvider, 'hasClass']);
-            $classReflections = array_map([$this->reflectionProvider, 'getClass'], $classNames);
+            $classNames = $this->getClassNamesFromPaths($this->behaviorPaths);
+            $classReflections = array_map(
+                [$this->reflectionProvider, 'getClass'],
+                $classNames
+            );
             /** @var array<ClassReflection> $classReflections */
-            $classReflections = array_filter($classReflections, static function (ClassReflection $classReflection) {
-                return $classReflection->is('ModelBehavior');
-            });
+            $classReflections = array_filter(
+                $classReflections,
+                static function (ClassReflection $classReflection) {
+                    return $classReflection->is('ModelBehavior');
+                }
+            );
             $this->behaviorMethods = [];
             foreach ($classReflections as $classReflection) {
-                $this->behaviorMethods = array_merge($this->behaviorMethods, $this->getModelBehaviorMethods($classReflection));
+                $this->behaviorMethods = array_merge(
+                    $this->behaviorMethods,
+                    $this->getModelBehaviorMethods($classReflection)
+                );
             }
         }
         return $this->behaviorMethods;
     }
 
     /**
-     * Returns all methods for the class which have a first parameter of Model, with that parameter removed.
+     * @param array<string> $paths
+     *
+     * @return array<string>
+     *
+     * @throws Exception
+     */
+    private function getClassNamesFromPaths(array $paths): array
+    {
+        $classPaths = [];
+        foreach ($paths as $path) {
+            $filePaths = glob($path);
+            if (! is_array($filePaths)) {
+                throw new Exception(sprintf('glob(%s) caused an error', $path));
+            }
+            $classPaths = array_merge($classPaths, $filePaths);
+        }
+        $classNames = array_map(static function ($classPath) {
+            return basename($classPath, '.php');
+        }, $classPaths);
+        return array_filter(
+            $classNames,
+            [$this->reflectionProvider, 'hasClass']
+        );
+    }
+
+    /**
+     * Returns all methods for the class which have a first parameter of Model,
+     * with that parameter removed.
      *
      * Also filters out private, protected, and static methods.
      *
@@ -148,8 +175,20 @@ final class ModelBehaviorsExtension implements MethodsClassReflectionExtension
         $parameters = $parametersAcceptor->getParameters();
         /** @var ParameterReflection|null $firstParameter */
         $firstParameter = array_shift($parameters);
-        return $firstParameter
-            && ! $firstParameter->getType()->isSuperTypeOf(new ObjectType('Model'))->no();
+
+        if (! $firstParameter) {
+            return false;
+        }
+
+        if (
+            $firstParameter->getType()
+                ->isSuperTypeOf(new ObjectType('Model'))
+                ->no()
+        ) {
+            return false;
+        }
+
+        return true;
     }
 
     private function wrapBehaviorMethod(
