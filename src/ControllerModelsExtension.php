@@ -10,7 +10,7 @@ use PHPStan\Reflection\PropertyReflection;
 use PHPStan\Reflection\ReflectionProvider;
 
 /**
- * Supports discovering models in controllers.
+ * Adds {@link Model}s as properties to {@link Controller}s.
  */
 final class ControllerModelsExtension implements
     PropertiesClassReflectionExtension

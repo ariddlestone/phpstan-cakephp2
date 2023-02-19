@@ -12,6 +12,10 @@ use PHPStan\Reflection\ParametersAcceptor;
 use PHPStan\TrinaryLogic;
 use PHPStan\Type\Type;
 
+/**
+ * Wraps {@link ModelBehavior} {@link MethodReflection}s to remove their first
+ * parameter (which should be the {@link Model}).
+ */
 final class ModelBehaviorMethodWrapper implements MethodReflection
 {
     /**

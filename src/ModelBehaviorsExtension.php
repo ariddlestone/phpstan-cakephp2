@@ -15,6 +15,9 @@ use PHPStan\Reflection\ParametersAcceptor;
 use PHPStan\Reflection\ReflectionProvider;
 use PHPStan\Type\ObjectType;
 
+/**
+ * Adds methods to {@link Model}s from {@link ModelBehavior} classes.
+ */
 final class ModelBehaviorsExtension implements MethodsClassReflectionExtension
 {
     /**
@@ -79,6 +82,8 @@ final class ModelBehaviorsExtension implements MethodsClassReflectionExtension
     }
 
     /**
+     * Gets all behavior methods from known behavior classes.
+     *
      * @return array<MethodReflection>
      *
      * @throws Exception
@@ -127,6 +132,15 @@ final class ModelBehaviorsExtension implements MethodsClassReflectionExtension
         return array_map([$this, 'wrapBehaviorMethod'], $methodReflections);
     }
 
+    /**
+     * Returns true if the given method would be made available as a behavior
+     * method.
+     *
+     * Specifically it must meet the following conditions:
+     * * Be public
+     * * Not be static
+     * * Have at least one variant which accepts a Model as its first parameter
+     */
     private function filterBehaviorMethods(
         ExtendedMethodReflection $methodReflection
     ): bool {
@@ -138,6 +152,10 @@ final class ModelBehaviorsExtension implements MethodsClassReflectionExtension
             );
     }
 
+    /**
+     * Returns true if the given method variant accepts a Model as its first
+     * parameter.
+     */
     private function filterBehaviorMethodVariants(
         ParametersAcceptor $parametersAcceptor
     ): bool {
@@ -160,6 +178,9 @@ final class ModelBehaviorsExtension implements MethodsClassReflectionExtension
         return true;
     }
 
+    /**
+     * Wraps a method reflection in a wrapper which removes the first parameter.
+     */
     private function wrapBehaviorMethod(
         MethodReflection $methodReflection
     ): MethodReflection {
@@ -167,6 +188,8 @@ final class ModelBehaviorsExtension implements MethodsClassReflectionExtension
     }
 
     /**
+     * Returns the name of a method from its reflection.
+     *
      * @param MethodReflection|ReflectionMethod $methodReflection
      */
     private function getMethodReflectionName($methodReflection): string
