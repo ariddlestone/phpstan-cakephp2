@@ -5,6 +5,8 @@ parameters:
       - lib/Cake/Model/Behavior/*.php
       - app/Plugin/*/Model/Behavior/*.php
       - app/Model/Behavior/*.php
+  stubFiles:
+    - stubs/Utility.php
 services:
   - class: ARiddlestone\PHPStanCakePHP2\ControllerComponentsExtension
     tags:
