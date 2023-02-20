@@ -38,7 +38,7 @@ final class ControllerModelsExtension implements
         ClassReflection $classReflection,
         string $propertyName
     ): PropertyReflection {
-        return new ControllerPropertyReflection(
+        return new PublicReadOnlyPropertyReflection(
             $propertyName,
             $classReflection
         );

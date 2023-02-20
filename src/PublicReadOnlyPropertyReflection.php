@@ -10,7 +10,7 @@ use PHPStan\TrinaryLogic;
 use PHPStan\Type\ObjectType;
 use PHPStan\Type\Type;
 
-final class ControllerPropertyReflection implements PropertyReflection
+final class PublicReadOnlyPropertyReflection implements PropertyReflection
 {
     /**
      * @var string
