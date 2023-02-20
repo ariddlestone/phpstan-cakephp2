@@ -36,6 +36,7 @@
             "vendor/cakephp/cakephp/lib/Cake/Controller",
             "vendor/cakephp/cakephp/lib/Cake/Event",
             "vendor/cakephp/cakephp/lib/Cake/Model",
+            "vendor/cakephp/cakephp/lib/Cake/Utility",
             "vendor/cakephp/cakephp/lib/Cake/View"
         ]
     },
