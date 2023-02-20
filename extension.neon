@@ -1,6 +1,4 @@
 parameters:
-  scanDirectories:
-    - vendor/cakephp/cakephp
   ModelBehaviorsExtension:
     behaviorPaths:
       - vendor/cakephp/cakephp/lib/Cake/Model/Behavior/*.php
