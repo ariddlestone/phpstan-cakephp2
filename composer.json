@@ -10,7 +10,7 @@
         }
     ],
     "require": {
-        "php": "^7.2|^8.0",
+        "php": "~7.4.0",
         "phpstan/phpstan": "^1.9"
     },
     "require-dev": {
