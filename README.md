@@ -3,7 +3,7 @@ PHPStan extensions to help test CakePHP 2 projects with PHPStan
 
 ## Requirements
 
-* PHP 7.2+
+* PHP 7.4
 * phpstan/phpstan 1.9+
 * cakephp/cakephp 2.x
 
