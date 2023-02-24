@@ -4,21 +4,21 @@ namespace ARiddlestone\PHPStanCakePHP2\Test\Stubs;
 
 use PHPStan\Testing\TypeInferenceTestCase;
 
-class UtilityTest extends TypeInferenceTestCase
+class ModelTest extends TypeInferenceTestCase
 {
     /**
      * @return mixed[]
      */
     public function dataFileAsserts(): iterable
     {
-        yield from $this->gatherAssertTypes(__DIR__ . '/../data/stubs/class_registry_init.php');
+        yield from $this->gatherAssertTypes(__DIR__ . '/../data/stubs/model_find.php');
     }
 
     /**
      * @dataProvider dataFileAsserts
      * @param mixed $args
      */
-    public function testUtilityStubs(string $assertType, string $file, ...$args): void
+    public function testModelStubs(string $assertType, string $file, ...$args): void
     {
         $this->assertFileAsserts($assertType, $file, ...$args);
     }

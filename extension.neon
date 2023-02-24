@@ -6,6 +6,7 @@ parameters:
       - app/Plugin/*/Model/Behavior/*.php
       - app/Model/Behavior/*.php
   stubFiles:
+    - stubs/Model.php
     - stubs/Utility.php
 services:
   - class: ARiddlestone\PHPStanCakePHP2\ComponentComponentsExtension
