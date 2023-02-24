@@ -8,13 +8,13 @@ parameters:
   stubFiles:
     - stubs/Utility.php
 services:
+  - class: ARiddlestone\PHPStanCakePHP2\ClassModelsExtension
+    tags:
+      - phpstan.broker.propertiesClassReflectionExtension
   - class: ARiddlestone\PHPStanCakePHP2\ComponentComponentsExtension
     tags:
       - phpstan.broker.propertiesClassReflectionExtension
   - class: ARiddlestone\PHPStanCakePHP2\ControllerComponentsExtension
-    tags:
-      - phpstan.broker.propertiesClassReflectionExtension
-  - class: ARiddlestone\PHPStanCakePHP2\ControllerModelsExtension
     tags:
       - phpstan.broker.propertiesClassReflectionExtension
   - class: ARiddlestone\PHPStanCakePHP2\ModelBehaviorsExtension
@@ -22,9 +22,6 @@ services:
       behaviorPaths: %ModelBehaviorsExtension.behaviorPaths%
     tags:
       - phpstan.broker.methodsClassReflectionExtension
-  - class: ARiddlestone\PHPStanCakePHP2\ModelModelsExtension
-    tags:
-      - phpstan.broker.propertiesClassReflectionExtension
 parametersSchema:
   ModelBehaviorsExtension: structure([
     behaviorPaths: listOf(string())
