@@ -32,7 +32,10 @@ final class ClassModelsExtension implements
         ClassReflection $classReflection,
         string $propertyName
     ): bool {
-        return array_filter(self::CLASSES_WITH_MODEL_PROPERTIES, [$classReflection, 'is'])
+        return array_filter(
+            self::CLASSES_WITH_MODEL_PROPERTIES,
+            [$classReflection, 'is']
+        )
             && $this->reflectionProvider->hasClass($propertyName)
             && $this->reflectionProvider->getClass($propertyName)->is('Model');
     }
