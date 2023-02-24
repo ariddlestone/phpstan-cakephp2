@@ -22,6 +22,9 @@ services:
       behaviorPaths: %ModelBehaviorsExtension.behaviorPaths%
     tags:
       - phpstan.broker.methodsClassReflectionExtension
+  - class: ARiddlestone\PHPStanCakePHP2\ModelModelsExtension
+    tags:
+      - phpstan.broker.propertiesClassReflectionExtension
 parametersSchema:
   ModelBehaviorsExtension: structure([
     behaviorPaths: listOf(string())
