@@ -10,11 +10,17 @@ use PHPStan\Reflection\PropertyReflection;
 use PHPStan\Reflection\ReflectionProvider;
 
 /**
- * Adds {@link Model}s as properties to {@link Model}s.
+ * Adds {@link Model}s as properties to {@link Shell}s.
  */
-final class ModelModelsExtension implements
+final class ClassModelsExtension implements
     PropertiesClassReflectionExtension
 {
+    private const CLASSES_WITH_MODEL_PROPERTIES = [
+        'Controller',
+        'Model',
+        'Shell',
+    ];
+
     private ReflectionProvider $reflectionProvider;
 
     public function __construct(ReflectionProvider $reflectionProvider)
@@ -26,7 +32,7 @@ final class ModelModelsExtension implements
         ClassReflection $classReflection,
         string $propertyName
     ): bool {
-        return $classReflection->is('Model')
+        return array_filter(self::CLASSES_WITH_MODEL_PROPERTIES, [$classReflection, 'is'])
             && $this->reflectionProvider->hasClass($propertyName)
             && $this->reflectionProvider->getClass($propertyName)->is('Model');
     }

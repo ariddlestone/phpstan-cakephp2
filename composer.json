@@ -32,6 +32,7 @@
             "tests/classes",
             "vendor/cakephp/cakephp/lib/Cake/Cache",
             "vendor/cakephp/cakephp/lib/Cake/Config",
+            "vendor/cakephp/cakephp/lib/Cake/Console/Shell.php",
             "vendor/cakephp/cakephp/lib/Cake/Core",
             "vendor/cakephp/cakephp/lib/Cake/Controller",
             "vendor/cakephp/cakephp/lib/Cake/Event",
