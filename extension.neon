@@ -8,16 +8,13 @@ parameters:
   stubFiles:
     - stubs/Utility.php
 services:
+  - class: ARiddlestone\PHPStanCakePHP2\ClassComponentsExtension
+    tags:
+      - phpstan.broker.propertiesClassReflectionExtension
   - class: ARiddlestone\PHPStanCakePHP2\ClassModelsExtension
     tags:
       - phpstan.broker.propertiesClassReflectionExtension
   - class: ARiddlestone\PHPStanCakePHP2\ClassTasksExtension
-    tags:
-      - phpstan.broker.propertiesClassReflectionExtension
-  - class: ARiddlestone\PHPStanCakePHP2\ComponentComponentsExtension
-    tags:
-      - phpstan.broker.propertiesClassReflectionExtension
-  - class: ARiddlestone\PHPStanCakePHP2\ControllerComponentsExtension
     tags:
       - phpstan.broker.propertiesClassReflectionExtension
   - class: ARiddlestone\PHPStanCakePHP2\ModelBehaviorsExtension
