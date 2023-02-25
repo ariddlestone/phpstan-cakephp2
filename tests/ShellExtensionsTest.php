@@ -12,6 +12,7 @@ class ShellExtensionsTest extends TypeInferenceTestCase
     public function dataFileAsserts(): iterable
     {
         yield from $this->gatherAssertTypes(__DIR__ . '/data/existing_shell_model.php');
+        yield from $this->gatherAssertTypes(__DIR__ . '/data/existing_shell_task.php');
         yield from $this->gatherAssertTypes(__DIR__ . '/data/invalid_shell_property.php');
     }
 
