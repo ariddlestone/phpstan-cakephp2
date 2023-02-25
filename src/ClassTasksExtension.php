@@ -7,11 +7,11 @@ namespace ARiddlestone\PHPStanCakePHP2;
 /**
  * Adds {@link Model}s as properties to {@link Shell}s.
  */
-final class ClassModelsExtension extends ClassPropertiesExtension
+final class ClassTasksExtension extends ClassPropertiesExtension
 {
     protected function getPropertyParentClassName(): string
     {
-        return 'Model';
+        return 'Shell';
     }
 
     /**
@@ -19,16 +19,12 @@ final class ClassModelsExtension extends ClassPropertiesExtension
      */
     protected function getContainingClassNames(): array
     {
-        return [
-            'Controller',
-            'Model',
-            'Shell',
-        ];
+        return ['Shell'];
     }
 
     protected function getClassNameFromPropertyName(
         string $propertyName
     ): string {
-        return $propertyName;
+        return $propertyName . 'Task';
     }
 }
