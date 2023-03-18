@@ -5,6 +5,9 @@ parameters:
       - lib/Cake/Model/Behavior/*.php
       - app/Plugin/*/Model/Behavior/*.php
       - app/Model/Behavior/*.php
+  SchemaService:
+    schemaPaths:
+      - app/Config/Schema/*.php
   stubFiles:
     - stubs/Utility.php
 services:
@@ -22,7 +25,13 @@ services:
       behaviorPaths: %ModelBehaviorsExtension.behaviorPaths%
     tags:
       - phpstan.broker.methodsClassReflectionExtension
+  - class: ARiddlestone\PHPStanCakePHP2\Service\SchemaService
+    arguments:
+      schemaPaths: %SchemaService.schemaPaths%
 parametersSchema:
   ModelBehaviorsExtension: structure([
     behaviorPaths: listOf(string())
+  ])
+  SchemaService: structure([
+    schemaPaths: listOf(string())
   ])

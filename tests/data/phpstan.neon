@@ -5,5 +5,8 @@ parameters:
   ModelBehaviorsExtension:
     behaviorPaths:
       - tests/classes/Model/Behavior/*.php
+  SchemaService:
+    schemaPaths:
+      - tests/Config/Schema/*.php
 includes:
   - ../../extension.neon
