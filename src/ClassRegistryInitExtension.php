@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace ARiddlestone\PHPStanCakePHP2;
 
 use ARiddlestone\PHPStanCakePHP2\Service\SchemaService;
@@ -10,13 +12,13 @@ use PHPStan\Analyser\Scope;
 use PHPStan\Reflection\MethodReflection;
 use PHPStan\Reflection\ReflectionProvider;
 use PHPStan\Type\BooleanType;
-use PHPStan\Type\DynamicStaticMethodReturnTypeExtension;
+use PHPStan\Type\DynamicStaticMethodReturnTypeExtension as PHPStanExtension;
 use PHPStan\Type\ObjectType;
 use PHPStan\Type\ObjectWithoutClassType;
 use PHPStan\Type\Type;
 use PHPStan\Type\UnionType;
 
-class ClassRegistryInitExtension implements DynamicStaticMethodReturnTypeExtension
+final class ClassRegistryInitExtension implements PHPStanExtension
 {
     private ReflectionProvider $reflectionProvider;
 
@@ -24,8 +26,8 @@ class ClassRegistryInitExtension implements DynamicStaticMethodReturnTypeExtensi
 
     public function __construct(
         ReflectionProvider $reflectionProvider,
-        SchemaService $schemaService)
-    {
+        SchemaService $schemaService
+    ) {
         $this->reflectionProvider = $reflectionProvider;
         $this->schemaService = $schemaService;
     }
@@ -35,13 +37,17 @@ class ClassRegistryInitExtension implements DynamicStaticMethodReturnTypeExtensi
         return 'ClassRegistry';
     }
 
-    public function isStaticMethodSupported(MethodReflection $methodReflection): bool
-    {
+    public function isStaticMethodSupported(
+        MethodReflection $methodReflection
+    ): bool {
         return $methodReflection->getName() === 'init';
     }
 
-    public function getTypeFromStaticMethodCall(MethodReflection $methodReflection, StaticCall $methodCall, Scope $scope): ?Type
-    {
+    public function getTypeFromStaticMethodCall(
+        MethodReflection $methodReflection,
+        StaticCall $methodCall,
+        Scope $scope
+    ): ?Type {
         $arg1 = $methodCall->getArgs()[0]->value;
         $evaluator = new ConstExprEvaluator();
         $arg1 = $evaluator->evaluateSilently($arg1);
@@ -61,7 +67,7 @@ class ClassRegistryInitExtension implements DynamicStaticMethodReturnTypeExtensi
     {
         return new UnionType([
             new BooleanType(),
-            new ObjectWithoutClassType()
+            new ObjectWithoutClassType(),
         ]);
     }
 }
