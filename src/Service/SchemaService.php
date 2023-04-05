@@ -12,8 +12,8 @@ use ReflectionProperty as CoreReflectionProperty;
  * Identifies schema files, and uses them to provide information about tables
  * and columns in the database.
  *
- * @phpstan-type table_schema array<mixed>
- * @phpstan-type column_schema array<mixed>
+ * @phpstan-type table_schema mixed
+ * @phpstan-type column_schema mixed
  */
 final class SchemaService
 {
@@ -54,7 +54,7 @@ final class SchemaService
      * @return table_schema|null
      * @throws Exception
      */
-    public function getTableSchema(string $table): ?array
+    public function getTableSchema(string $table)
     {
         $tableSchemas = $this->getTableSchemas();
         return array_key_exists($table, $tableSchemas)
