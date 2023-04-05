@@ -29,7 +29,7 @@
             "ARiddlestone\\PHPStanCakePHP2\\Test\\": "tests/"
         },
         "classmap": [
-            "tests/classes",
+            "tests/Feature/classes",
             "vendor/cakephp/cakephp/lib/Cake/Cache",
             "vendor/cakephp/cakephp/lib/Cake/Config",
             "vendor/cakephp/cakephp/lib/Cake/Console/Shell.php",

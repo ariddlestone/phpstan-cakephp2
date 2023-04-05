@@ -1,17 +1,17 @@
 <?php
 
-namespace ARiddlestone\PHPStanCakePHP2\Test\Stubs;
+namespace ARiddlestone\PHPStanCakePHP2\Test\Feature;
 
 use PHPStan\Testing\TypeInferenceTestCase;
 
-class UtilityTest extends TypeInferenceTestCase
+class ClassRegistryInitTest extends TypeInferenceTestCase
 {
     /**
      * @return mixed[]
      */
     public function dataFileAsserts(): iterable
     {
-        yield from $this->gatherAssertTypes(__DIR__ . '/../data/stubs/class_registry_init.php');
+        yield from $this->gatherAssertTypes(__DIR__ . '/data/class_registry_init.php');
     }
 
     /**
@@ -26,7 +26,7 @@ class UtilityTest extends TypeInferenceTestCase
     public static function getAdditionalConfigFiles(): array
     {
         return [
-            __DIR__ . '/../data/phpstan.neon',
+            __DIR__ . '/data/phpstan.neon',
         ];
     }
 }

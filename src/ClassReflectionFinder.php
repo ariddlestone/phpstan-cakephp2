@@ -11,16 +11,10 @@ use PHPStan\Reflection\ReflectionProvider;
 /**
  * Finds class reflections for all classes at specified glob paths, optionally
  * restricted to children of certain classes.
- *
- * Assumes classes have no namespace, and are named the same as their files, eg.
- * "MyClass" is in a file called "MyClass.php".
  */
 final class ClassReflectionFinder
 {
-    /**
-     * @var ReflectionProvider
-     */
-    private $reflectionProvider;
+    private ReflectionProvider $reflectionProvider;
 
     public function __construct(ReflectionProvider $reflectionProvider)
     {
@@ -36,11 +30,12 @@ final class ClassReflectionFinder
      */
     public function getClassReflections(
         array $paths,
-        string $isA = 'stdClass'
+        string $isA = 'stdClass',
+        ?callable $pathToClassName = null
     ): array {
         $classReflections = array_map(
             [$this->reflectionProvider, 'getClass'],
-            $this->getClassNamesFromPaths($paths)
+            $this->getClassNamesFromPaths($paths, $pathToClassName)
         );
         return array_filter(
             $classReflections,
@@ -59,8 +54,10 @@ final class ClassReflectionFinder
      *
      * @throws Exception
      */
-    private function getClassNamesFromPaths(array $paths): array
-    {
+    private function getClassNamesFromPaths(
+        array $paths,
+        ?callable $pathToClassName
+    ): array {
         $classPaths = [];
         foreach ($paths as $path) {
             $filePaths = glob($path);
@@ -69,12 +66,15 @@ final class ClassReflectionFinder
             }
             $classPaths = array_merge($classPaths, $filePaths);
         }
-        $classNames = array_map(static function ($classPath) {
-            return basename($classPath, '.php');
-        }, $classPaths);
+        $classNames = array_map($pathToClassName ?? [$this, 'getClassNameFromFileName'], $classPaths);
         return array_filter(
             $classNames,
             [$this->reflectionProvider, 'hasClass']
         );
+    }
+
+    private function getClassNameFromFileName(string $fileName): string
+    {
+        return basename($fileName, '.php');
     }
 }

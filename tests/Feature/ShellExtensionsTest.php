@@ -1,6 +1,6 @@
 <?php
 
-namespace ARiddlestone\PHPStanCakePHP2\Test;
+namespace ARiddlestone\PHPStanCakePHP2\Test\Feature;
 
 use PHPStan\Testing\TypeInferenceTestCase;
 
