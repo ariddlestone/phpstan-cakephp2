@@ -1,11 +1,11 @@
 <?php
 
-class AppSchema
+class AppSchema extends CakeSchema
 {
     /**
      * @var array<string, mixed>
      */
-    public $basic_model = array(
+    public $basic_models = array(
         'id' => array(
             'type' => 'integer',
             'null' => false,
@@ -19,7 +19,7 @@ class AppSchema
     /**
      * @var array<string, mixed>
      */
-    public $table_without_model = array(
+    public $table_without_models = array(
         'id' => array(
             'type' => 'integer',
             'null' => false,

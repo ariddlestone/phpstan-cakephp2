@@ -27,7 +27,7 @@ final class SchemaService
     /**
      * @var array<string, table_schema>
      */
-    private ?array $tableSchemas;
+    private ?array $tableSchemas = null;
 
     /**
      * @param ReflectionProvider $reflectionProvider
@@ -98,7 +98,7 @@ final class SchemaService
                     ->getProperties(CoreReflectionProperty::IS_PUBLIC)
             );
             $tableProperties = array_diff($propertyNames, $cakeSchemaPropertyNames);
-            $this->tableSchemas[$schemaReflection->getName()] = array_intersect_key(
+            $this->tableSchemas += array_intersect_key(
                 $schemaReflection->getNativeReflection()->getDefaultProperties(),
                 array_fill_keys($tableProperties, null)
             );

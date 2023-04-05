@@ -1,0 +1,12 @@
+parameters:
+  level: 9
+  paths:
+    - tests/Feature/data
+  ModelBehaviorsExtension:
+    behaviorPaths:
+      - tests/Feature/classes/Model/Behavior/*.php
+  SchemaService:
+    schemaPaths:
+      - tests/Feature/classes/Config/Schema/*.php
+includes:
+  - ../../../extension.neon
