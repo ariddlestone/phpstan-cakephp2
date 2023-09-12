@@ -1,0 +1,9 @@
+* text=auto eol=lf
+
+# Do not include the following files when creating repo artifacts, e.g. the zip
+/.* export-ignore
+/tests/ export-ignore
+/docker-compose.yml export-ignore
+/phpinsights.php export-ignore
+/phpstan.neon.dist export-ignore
+/phpunit.xml export-ignore
