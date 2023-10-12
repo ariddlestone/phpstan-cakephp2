@@ -31,6 +31,9 @@ services:
   - class: ARiddlestone\PHPStanCakePHP2\Service\SchemaService
     arguments:
       schemaPaths: %SchemaService.schemaPaths%
+  - class: ARiddlestone\PHPStanCakePHP2\LoadComponentOnFlyMethodReturnTypeExtension
+    tags:
+      - phpstan.broker.dynamicMethodReturnTypeExtension
 parametersSchema:
   ModelBehaviorsExtension: structure([
     behaviorPaths: listOf(string())
