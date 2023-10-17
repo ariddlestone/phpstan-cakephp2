@@ -46,6 +46,7 @@
         "phpinsights": "phpinsights analyse --no-interaction --ansi --config-path=phpinsights.php --summary src",
         "phpinsights-github": "phpinsights analyse --no-interaction --ansi --config-path=phpinsights.php --format=github-action src",
         "phpstan": "phpstan",
+        "phpstan-github": "phpstan --error-format=github",
         "phpunit": "phpunit",
         "test": [
             "@phpunit",

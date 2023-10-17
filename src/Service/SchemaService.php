@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace ARiddlestone\PHPStanCakePHP2\Service;
 
 use ARiddlestone\PHPStanCakePHP2\ClassReflectionFinder;
@@ -30,7 +32,6 @@ final class SchemaService
     private ?array $tableSchemas = null;
 
     /**
-     * @param ReflectionProvider $reflectionProvider
      * @param array<string> $schemaPaths
      */
     public function __construct(
@@ -50,8 +51,8 @@ final class SchemaService
     }
 
     /**
-     * @param string $table
      * @return table_schema|null
+     *
      * @throws Exception
      */
     public function getTableSchema(string $table)
@@ -73,10 +74,12 @@ final class SchemaService
             return $this->tableSchemas;
         }
         $cakeSchemaPropertyNames = array_map(
-            function (ReflectionProperty $reflectionProperty) {
+            static function (ReflectionProperty $reflectionProperty) {
                 return $reflectionProperty->getName();
             },
-            $this->reflectionProvider->getClass('CakeSchema')->getNativeReflection()->getProperties()
+            $this->reflectionProvider->getClass('CakeSchema')
+                ->getNativeReflection()
+                ->getProperties()
         );
         $this->tableSchemas = [];
         $classReflectionFinder = new ClassReflectionFinder(
@@ -91,15 +94,19 @@ final class SchemaService
         );
         foreach ($schemaReflections as $schemaReflection) {
             $propertyNames = array_map(
-                function (ReflectionProperty $reflectionProperty) {
+                static function (ReflectionProperty $reflectionProperty) {
                     return $reflectionProperty->getName();
                 },
                 $schemaReflection->getNativeReflection()
                     ->getProperties(CoreReflectionProperty::IS_PUBLIC)
             );
-            $tableProperties = array_diff($propertyNames, $cakeSchemaPropertyNames);
+            $tableProperties = array_diff(
+                $propertyNames,
+                $cakeSchemaPropertyNames
+            );
             $this->tableSchemas += array_intersect_key(
-                $schemaReflection->getNativeReflection()->getDefaultProperties(),
+                $schemaReflection->getNativeReflection()
+                    ->getDefaultProperties(),
                 array_fill_keys($tableProperties, null)
             );
         }

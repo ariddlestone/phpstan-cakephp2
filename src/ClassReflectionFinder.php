@@ -66,7 +66,10 @@ final class ClassReflectionFinder
             }
             $classPaths = array_merge($classPaths, $filePaths);
         }
-        $classNames = array_map($pathToClassName ?? [$this, 'getClassNameFromFileName'], $classPaths);
+        $classNames = array_map(
+            $pathToClassName ?? [$this, 'getClassNameFromFileName'],
+            $classPaths
+        );
         return array_filter(
             $classNames,
             [$this->reflectionProvider, 'hasClass']
