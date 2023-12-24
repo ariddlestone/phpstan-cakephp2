@@ -1,6 +1,8 @@
 <?php
 
-class BasicController extends Controller
+declare(strict_types=1);
+
+class BaseController extends Controller
 {
     /**
      * @var array<array-key, string>
