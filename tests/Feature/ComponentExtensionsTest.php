@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace ARiddlestone\PHPStanCakePHP2\Test\Feature;
 
 use PHPStan\Testing\TypeInferenceTestCase;
