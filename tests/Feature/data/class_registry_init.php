@@ -12,3 +12,6 @@ assertType('bool|object', $notClass);
 
 $modelWithoutClass = ClassRegistry::init('TableWithoutModel');
 assertType('Model', $modelWithoutClass);
+
+$class = ClassRegistry::init(BasicModel::class);
+assertType('BasicModel', $class);

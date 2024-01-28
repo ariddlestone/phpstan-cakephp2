@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace PHPStanCakePHP2;
 
+use PhpParser\Node\Expr\ClassConstFetch;
+use PhpParser\Node\Name;
+use PhpParser\Node\Scalar\String_;
 use PHPStanCakePHP2\Service\SchemaService;
 use Inflector;
 use PhpParser\ConstExprEvaluator;
@@ -44,9 +47,15 @@ class ClassRegistryInitExtension implements DynamicStaticMethodReturnTypeExtensi
 
     public function getTypeFromStaticMethodCall(MethodReflection $methodReflection, StaticCall $methodCall, Scope $scope): ?Type
     {
-        $arg1 = $methodCall->getArgs()[0]->value;
+        $value = $methodCall->getArgs()[0]->value;
         $evaluator = new ConstExprEvaluator();
-        $arg1 = $evaluator->evaluateSilently($arg1);
+
+        if ($value instanceof ClassConstFetch && $value->class instanceof Name\FullyQualified) {
+            $value = new String_($value->class->toString());
+        }
+
+        $arg1 = $evaluator->evaluateSilently($value);
+
         if (! is_string($arg1)) {
             return $this->getDefaultType();
         }
