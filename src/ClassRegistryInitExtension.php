@@ -6,6 +6,7 @@ namespace PHPStanCakePHP2;
 
 use PhpParser\Node\Expr\ClassConstFetch;
 use PhpParser\Node\Name;
+use PhpParser\Node\Scalar\String_;
 use PHPStanCakePHP2\Service\SchemaService;
 use Inflector;
 use PhpParser\ConstExprEvaluator;
@@ -49,8 +50,8 @@ class ClassRegistryInitExtension implements DynamicStaticMethodReturnTypeExtensi
         $value = $methodCall->getArgs()[0]->value;
         $evaluator = new ConstExprEvaluator();
 
-        if ($value instanceof ClassConstFetch && $value->class instanceof Name) {
-            $value = $value->class->toString();
+        if ($value instanceof ClassConstFetch && $value->class instanceof Name\FullyQualified) {
+            $value = new String_($value->class->toString());
         }
 
         $arg1 = $evaluator->evaluateSilently($value);
