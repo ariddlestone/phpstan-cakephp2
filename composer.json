@@ -1,12 +1,12 @@
 {
-    "name": "ariddlestone/phpstan-cakephp2",
+    "name": "sidz/phpstan-cakephp2",
     "description": "An extension to help test CakePHP 2 projects with PHPStan",
     "type": "library",
     "license": "MIT",
     "authors": [
         {
-            "name": "Andrew Riddlestone",
-            "email": "andrew.riddlestone@gmail.com"
+            "name": "Oleg Zhulnev",
+            "email": "plbsid@gmail.com"
         }
     ],
     "require": {
@@ -21,12 +21,12 @@
     },
     "autoload": {
         "psr-4": {
-            "ARiddlestone\\PHPStanCakePHP2\\": "src/"
+            "PHPStanCakePHP2\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "ARiddlestone\\PHPStanCakePHP2\\Test\\": "tests/"
+            "PHPStanCakePHP2\\Test\\": "tests/"
         },
         "classmap": [
             "tests/Feature/classes",
@@ -42,7 +42,6 @@
         ]
     },
     "scripts": {
-        "extract-phpstan": "phar extract -f vendor/phpstan/phpstan/phpstan.phar phpstan",
         "phpinsights": "phpinsights analyse --no-interaction --ansi --config-path=phpinsights.php --summary src",
         "phpinsights-github": "phpinsights analyse --no-interaction --ansi --config-path=phpinsights.php --format=github-action src",
         "phpstan": "phpstan",

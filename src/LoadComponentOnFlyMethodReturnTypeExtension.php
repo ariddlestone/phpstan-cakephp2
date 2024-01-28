@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace ARiddlestone\PHPStanCakePHP2;
+namespace PHPStanCakePHP2;
 
 use Component;
 use PhpParser\Node\Expr\MethodCall;

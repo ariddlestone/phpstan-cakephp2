@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace ARiddlestone\PHPStanCakePHP2;
+namespace PHPStanCakePHP2;
 
 use Exception;
 use PHPStan\Reflection\ClassReflection;
@@ -15,20 +15,17 @@ use PHPStan\Reflection\ReflectionProvider;
  */
 final class ModelBehaviorsExtension implements MethodsClassReflectionExtension
 {
-    /**
-     * @var ReflectionProvider
-     */
-    private $reflectionProvider;
+    private ReflectionProvider $reflectionProvider;
 
     /**
      * @var array<string>
      */
-    private $behaviorPaths;
+    private array $behaviorPaths;
 
     /**
      * @var array<MethodReflection>|null
      */
-    private $behaviorMethods = null;
+    private ?array $behaviorMethods = null;
 
     /**
      * @param array<string> $behaviorPaths
@@ -54,7 +51,8 @@ final class ModelBehaviorsExtension implements MethodsClassReflectionExtension
                 array_map(
                     [$this, 'getMethodReflectionName'],
                     $this->getBehaviorMethods()
-                )
+                ),
+                true
             );
     }
 

@@ -11,14 +11,14 @@ PHPStan extensions to help test CakePHP 2 projects with PHPStan
 
 Installation is best done through composer:
 ```shell
-composer require --dev ariddlestone/phpstan-cakephp2
+composer require --dev sidz/phpstan-cakephp2
 ```
 
 You will need to make sure the extension is included in your phpstan config:
 ```yaml
 # phpstan.neon
 includes:
-  - vendor/ariddlestone/phpstan-cakephp2/extension.neon
+  - vendor/sidz/phpstan-cakephp2/extension.neon
 ```
 
 If you have behavior classes in odd locations (perhaps in a vendor directory) you will need to add those locations to

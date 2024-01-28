@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace ARiddlestone\PHPStanCakePHP2;
+namespace PHPStanCakePHP2;
 
 use PHPStan\BetterReflection\Reflection\Adapter\ReflectionMethod;
 use PHPStan\Reflection\ClassReflection;
@@ -14,10 +14,7 @@ use PHPStan\Type\ObjectType;
 
 final class ModelBehaviorMethodExtractor
 {
-    /**
-     * @var ClassReflection
-     */
-    private $classReflection;
+    private ClassReflection $classReflection;
 
     public function __construct(ClassReflection $classReflection)
     {

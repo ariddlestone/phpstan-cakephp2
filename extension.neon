@@ -11,27 +11,27 @@ parameters:
   stubFiles:
     - stubs/Utility.php
 services:
-  - class: ARiddlestone\PHPStanCakePHP2\ClassComponentsExtension
+  - class: PHPStanCakePHP2\ClassComponentsExtension
     tags:
       - phpstan.broker.propertiesClassReflectionExtension
-  - class: ARiddlestone\PHPStanCakePHP2\ClassModelsExtension
+  - class: PHPStanCakePHP2\ClassModelsExtension
     tags:
       - phpstan.broker.propertiesClassReflectionExtension
-  - class: ARiddlestone\PHPStanCakePHP2\ClassRegistryInitExtension
+  - class: PHPStanCakePHP2\ClassRegistryInitExtension
     tags:
       - phpstan.broker.dynamicStaticMethodReturnTypeExtension
-  - class: ARiddlestone\PHPStanCakePHP2\ClassTasksExtension
+  - class: PHPStanCakePHP2\ClassTasksExtension
     tags:
       - phpstan.broker.propertiesClassReflectionExtension
-  - class: ARiddlestone\PHPStanCakePHP2\ModelBehaviorsExtension
+  - class: PHPStanCakePHP2\ModelBehaviorsExtension
     arguments:
       behaviorPaths: %ModelBehaviorsExtension.behaviorPaths%
     tags:
       - phpstan.broker.methodsClassReflectionExtension
-  - class: ARiddlestone\PHPStanCakePHP2\Service\SchemaService
+  - class: PHPStanCakePHP2\Service\SchemaService
     arguments:
       schemaPaths: %SchemaService.schemaPaths%
-  - class: ARiddlestone\PHPStanCakePHP2\LoadComponentOnFlyMethodReturnTypeExtension
+  - class: PHPStanCakePHP2\LoadComponentOnFlyMethodReturnTypeExtension
     tags:
       - phpstan.broker.dynamicMethodReturnTypeExtension
 parametersSchema:

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace ARiddlestone\PHPStanCakePHP2;
+namespace PHPStanCakePHP2;
 
 use PHPStan\Reflection\ClassMemberReflection;
 use PHPStan\Reflection\ClassReflection;
@@ -18,10 +18,7 @@ use PHPStan\Type\Type;
  */
 final class ModelBehaviorMethodWrapper implements MethodReflection
 {
-    /**
-     * @var MethodReflection
-     */
-    private $wrappedMethod;
+    private MethodReflection $wrappedMethod;
 
     public function __construct(MethodReflection $wrappedMethod)
     {

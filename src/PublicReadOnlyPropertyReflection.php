@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace ARiddlestone\PHPStanCakePHP2;
+namespace PHPStanCakePHP2;
 
 use PHPStan\Reflection\ClassReflection;
 use PHPStan\Reflection\PropertyReflection;
@@ -12,15 +12,9 @@ use PHPStan\Type\Type;
 
 final class PublicReadOnlyPropertyReflection implements PropertyReflection
 {
-    /**
-     * @var string
-     */
-    private $name;
+    private string $name;
 
-    /**
-     * @var ClassReflection
-     */
-    private $declaringClass;
+    private ClassReflection $declaringClass;
 
     public function __construct(string $name, ClassReflection $declaringClass)
     {

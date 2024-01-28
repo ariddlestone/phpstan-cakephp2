@@ -1,8 +1,10 @@
 <?php
 
-namespace ARiddlestone\PHPStanCakePHP2\Service;
+declare(strict_types=1);
 
-use ARiddlestone\PHPStanCakePHP2\ClassReflectionFinder;
+namespace PHPStanCakePHP2\Service;
+
+use PHPStanCakePHP2\ClassReflectionFinder;
 use Exception;
 use PHPStan\BetterReflection\Reflection\Adapter\ReflectionProperty;
 use PHPStan\Reflection\ReflectionProvider;

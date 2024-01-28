@@ -1,8 +1,10 @@
 <?php
 
-namespace ARiddlestone\PHPStanCakePHP2;
+declare(strict_types=1);
 
-use ARiddlestone\PHPStanCakePHP2\Service\SchemaService;
+namespace PHPStanCakePHP2;
+
+use PHPStanCakePHP2\Service\SchemaService;
 use Inflector;
 use PhpParser\ConstExprEvaluator;
 use PhpParser\Node\Expr\StaticCall;
