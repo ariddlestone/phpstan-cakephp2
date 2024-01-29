@@ -9,6 +9,7 @@ parameters:
     schemaPaths:
       - app/Config/Schema/*.php
   stubFiles:
+    - stubs/Routing/Router.stub
     - stubs/Utility.stub
 services:
   - class: PHPStanCakePHP2\ClassComponentsExtension

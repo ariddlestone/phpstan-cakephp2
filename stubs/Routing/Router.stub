@@ -1,0 +1,9 @@
+<?php
+
+class Router
+{
+    /**
+     * @param array|string $url
+     */
+    public static function redirect($route, $url, $options = array()) {}
+}
