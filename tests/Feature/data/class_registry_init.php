@@ -18,4 +18,6 @@ assertType('BasicModel', $class);
 
 $var = 'BasicModel';
 
-assertType('Model', ClassRegistry::init($var));
+assertType('BasicModel', ClassRegistry::init($var));
+
+assertType('bool|object', ClassRegistry::init([123]));
