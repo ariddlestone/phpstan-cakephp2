@@ -16,6 +16,8 @@ class ControllerExtensionsTest extends TypeInferenceTestCase
         yield from $this->gatherAssertTypes(__DIR__ . '/data/existing_controller_model.php');
         yield from $this->gatherAssertTypes(__DIR__ . '/data/existing_controller_component.php');
         yield from $this->gatherAssertTypes(__DIR__ . '/data/invalid_controller_property.php');
+        yield from $this->gatherAssertTypes(__DIR__ . '/data/existing_controller_component_with_same_method_name_as_model.php');
+        yield from $this->gatherAssertTypes(__DIR__ . '/data/existing_controller_component_from_parent_controller.php');
     }
 
     /**
