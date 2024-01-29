@@ -15,3 +15,7 @@ assertType('Model', $modelWithoutClass);
 
 $class = ClassRegistry::init(BasicModel::class);
 assertType('BasicModel', $class);
+
+$var = 'BasicModel';
+
+assertType('Model', ClassRegistry::init($var));
