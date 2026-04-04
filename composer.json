@@ -63,6 +63,12 @@
     "config": {
         "allow-plugins": {
             "dealerdirect/phpcodesniffer-composer-installer": true
+        },
+        "audit": {
+            "ignore": {
+                "CVE-2015-8379": "CakePHP code is tested, not run",
+                "CVE-2020-15400": "CakePHP code is tested, not run"
+            }
         }
     }
 }
