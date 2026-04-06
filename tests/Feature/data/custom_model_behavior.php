@@ -4,7 +4,7 @@ declare(strict_types = 1);
 
 use function PHPStan\Testing\assertType;
 
-/** @var BasicModel $model */
+/** @var ModelWithBehaviors $model */
 $result = $model->behaviorMethod('a string!');
 
 assertType('string', $result);

@@ -5,6 +5,6 @@ declare(strict_types = 1);
 use function PHPStan\Testing\assertType;
 
 /** @var BasicShell $shell */
-$model = $shell->BasicModel;
+$model = $shell->ModelWithoutBehaviors;
 
-assertType('BasicModel', $model);
+assertType('ModelWithoutBehaviors', $model);

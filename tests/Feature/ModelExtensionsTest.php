@@ -15,6 +15,7 @@ class ModelExtensionsTest extends TypeInferenceTestCase
         yield from $this->gatherAssertTypes(__DIR__ . '/data/custom_model_behavior.php');
         yield from $this->gatherAssertTypes(__DIR__ . '/data/invalid_model_property.php');
         yield from $this->gatherAssertTypes(__DIR__ . '/data/existing_model_model.php');
+        yield from $this->gatherAssertTypes(__DIR__ . '/data/missing_model_behavior.php');
     }
 
     /**
