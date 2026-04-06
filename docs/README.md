@@ -3,7 +3,7 @@
 ## MVC Extensions
 
 PHPStan extensions are available for several MVC classes in CakePHP to help PHPStan understand the otherwise
-undocumented methods and properties of these classes.
+undocumented methods and properties of these classes. The links covered are shown in the diagram below.
 
 ```mermaid
 classDiagram
@@ -70,10 +70,4 @@ classDiagram
     
     AppHelper --|> Helper
     Helper --> "*" Helper
-    
-    click Component href "./Components.md" "See PHPStan customizations for Components"
-    click Controller href "./Controllers.md" "See PHPStan customizations for Controllers"
-    click Helper href "./Helpers.md" "See PHPStan customizations for Helpers"
-    click Model href "./Models.md" "See PHPStan customizations for Models"
-    click Shell href "./Shells.md" "See PHPStan customizations for Shells"
 ```
