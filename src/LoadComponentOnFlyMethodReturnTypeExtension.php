@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace ARiddlestone\PHPStanCakePHP2;
 
 use Component;
+use ComponentCollection;
 use PhpParser\Node\Expr\MethodCall;
 use PhpParser\Node\Scalar\String_;
 use PHPStan\Analyser\Scope;
@@ -25,7 +26,7 @@ final class LoadComponentOnFlyMethodReturnTypeExtension implements ReturnTypeExt
 
     public function getClass(): string
     {
-        return \ComponentCollection::class;
+        return ComponentCollection::class;
     }
 
     public function isMethodSupported(MethodReflection $methodReflection): bool

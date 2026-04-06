@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace ARiddlestone\PHPStanCakePHP2;
 
 use ARiddlestone\PHPStanCakePHP2\Service\SchemaService;
+use Exception;
 use Inflector;
 use PhpParser\ConstExprEvaluationException;
 use PhpParser\ConstExprEvaluator;
@@ -48,6 +49,7 @@ final class ClassRegistryInitExtension implements ReturnTypeExtension
     /**
      * @throws ShouldNotHappenException
      * @throws ConstExprEvaluationException
+     * @throws Exception
      */
     public function getTypeFromStaticMethodCall(
         MethodReflection $methodReflection,
