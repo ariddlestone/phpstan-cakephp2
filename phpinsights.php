@@ -55,6 +55,7 @@ return [
 
     'exclude' => [
         'phpstan',
+        'stubs',
         'tests',
         'vendor',
     ],
