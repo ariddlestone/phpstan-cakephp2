@@ -71,9 +71,9 @@ classDiagram
     AppHelper --|> Helper
     Helper --> "*" Helper
     
-    click Component href "Components.md" "See PHPStan customizations for Components"
-    click Controller href "Controllers.md" "See PHPStan customizations for Controllers"
-    click Helper href "Helpers.md" "See PHPStan customizations for Helpers"
-    click Model href "Models.md" "See PHPStan customizations for Models"
-    click Shell href "Shells.md" "See PHPStan customizations for Shells"
+    click Component href "./Components.md" "See PHPStan customizations for Components"
+    click Controller href "./Controllers.md" "See PHPStan customizations for Controllers"
+    click Helper href "./Helpers.md" "See PHPStan customizations for Helpers"
+    click Model href "./Models.md" "See PHPStan customizations for Models"
+    click Shell href "./Shells.md" "See PHPStan customizations for Shells"
 ```
